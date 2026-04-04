@@ -9,6 +9,13 @@
 @username2 = testuser2
 @password2 = testpass456
 
+@username3 = alice
+@password3 = secret123
+
+###
+# Get all books. 
+GET {{baseUrl}}/
+
 ###
 # Attempt registration of user1
 POST {{baseUrl}}/register
@@ -30,5 +37,51 @@ Content-Type: application/json
 }
 
 ###
+# Attempt registration of user3
+POST {{baseUrl}}/register       
+Content-Type: application/json
+
+{
+    "username": "{{username3}}",
+    "password": "{{password3}}"
+}
+
+###
 #Return users list
 GET {{baseUrl}}/allusers    
+
+
+###
+# Attempt login of user 3
+POST {{baseUrl}}/customer/login 
+Content-Type: application/json
+
+{
+    "username": "{{username3}}",
+    "password": "{{password3}}"
+}
+
+###
+# Add a review for book of ISBN. Try this with different user logins. It should modify an existing review.  
+# Note the username is identified from the session following login, so we don't include it in the request.
+PUT {{baseUrl}}/customer/auth/review/1
+Content-Type: application/json
+
+{
+    "review": "Not bad, but could have done with more big words."
+}
+
+###
+# Add a review for book of ISBN.Same as before but with different review content. 
+PUT {{baseUrl}}/customer/auth/review/1
+Content-Type: application/json
+
+{
+    "review": "Pretty good. Though I could do better myself."
+}
+
+
+###
+# Delete a review
+# Note the username is identified from the session.
+DELETE {{baseUrl}}/customer/auth/review/1
