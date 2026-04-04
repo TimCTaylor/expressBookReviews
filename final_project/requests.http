@@ -1,0 +1,34 @@
+// store of http requests for testing the Express app. These are used in the VS Code REST Client extension, 
+// which allows me to send http requests and view the responses without leaving VS Code. Each request is separated 
+// by a line of three hashes . I can click on the "Send Request" link above each request to execute it.
+
+@baseUrl = http://localhost:5000
+@username1 = testuser1
+@password1 = testpass123
+
+@username2 = testuser2
+@password2 = testpass456
+
+###
+# Attempt registration of user1
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+    "username": "{{username1}}",
+    "password": "{{password1}}"
+}
+
+###
+# Attempt registration of user2
+POST {{baseUrl}}/register       
+Content-Type: application/json
+
+{
+    "username": "{{username2}}",
+    "password": "{{password2}}"
+}
+
+###
+#Return users list
+GET {{baseUrl}}/allusers    

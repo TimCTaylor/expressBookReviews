@@ -2,7 +2,8 @@
 // IBM provided this database as the coursework starting point, so I have not changed it.
 let books = {
       1: {"author": "Chinua Achebe","title": "Things Fall Apart", "reviews": {} },
-      2: {"author": "Hans Christian Andersen","title": "Fairy tales", "reviews": {} },
+      2: {"author": "Hans Christian Andersen","title": "Fairy tales", "reviews": {"ttaylor": "Great book!", "jdoe": "Loved it!",
+                    "irate": "Will never prove popular."} },
       3: {"author": "Dante Alighieri","title": "The Divine Comedy", "reviews": {} },
       4: {"author": "Unknown","title": "The Epic Of Gilgamesh", "reviews": {} },
       5: {"author": "Unknown","title": "The Book Of Job", "reviews": {} },
