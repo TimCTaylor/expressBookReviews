@@ -29,20 +29,49 @@ public_users.get('/',function (req, res) {
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  const targetISBN = req.params.isbn;
+  const book = books[targetISBN];
+  if (book) {
+    return res.send(JSON.stringify(book, null, 4));
+  } else {
+    return res.status(404).send(`Book with ISBN ${targetISBN} not found.`);
+  }
+  
  });
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  // I strip out whitespace and more and then in the filter(), I use includes() rather than a check for equality
+  // to allow for partial matches on surname only. This is useful for practical reasons (I wish in my real publishing career
+  // real book publishing systems were insensitive to choices of punctuation and whitespace). And, of course, the 
+  // url for the param can't have the whitespace that we do in the books db.
+  // If I were doing this for production code, I would also address diacritics.
+  function normalizeAuthorString(str) {
+    return str.replace(/[\s\.\-]+/g, '').toLowerCase();
+  }
+  const targetAuthor = normalizeAuthorString(req.params.author);
+  const bookKeys = Object.keys(books);  
+  const matchingBooks = bookKeys.filter(key => normalizeAuthorString(books[key].author).includes(targetAuthor)).map(key => books[key]);
+  if (matchingBooks.length > 0) {
+    return res.send(JSON.stringify(matchingBooks, null, 4));
+  } else {
+    return res.status(404).send(`No books found by author ${targetAuthor}.`);
+  }
 });
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  function normalizeTitleString(str) {
+    return str.replace(/[\s\-]+/g, '').toLowerCase();
+  }
+  const targetTitle = normalizeTitleString(req.params.title);
+  const bookKeys = Object.keys(books);  
+  const matchingBooks = bookKeys.filter(key => normalizeTitleString(books[key].title).includes(targetTitle)).map(key => books[key]);
+  if (matchingBooks.length > 0) {
+    return res.send(JSON.stringify(matchingBooks, null, 4));
+  } else {
+    return res.status(404).send(`No books found with title ${targetTitle}.`);
+  }
 });
 
 //  Get book review

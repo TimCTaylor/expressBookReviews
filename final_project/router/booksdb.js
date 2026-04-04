@@ -1,3 +1,5 @@
+// Setup starting database of books. The key is to be regarded as the ISBN, even though these are not in real ISBN format.
+// IBM provided this database as the coursework starting point, so I have not changed it.
 let books = {
       1: {"author": "Chinua Achebe","title": "Things Fall Apart", "reviews": {} },
       2: {"author": "Hans Christian Andersen","title": "Fairy tales", "reviews": {} },
