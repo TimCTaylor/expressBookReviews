@@ -146,8 +146,30 @@ async function callGetBookByISBN(isbn) {
     }
 }
 
+async function callGetBookByAuthor(author) {
+    try {
+        const response = await axios.get(`http://localhost:5000/author/${author}`); 
+        console.log(`\nAxios GET call to the get book by author endpoint for author ${author}.`);
+        console.log(response.data);
+    } catch (error) {
+        console.error(error);
+    } 
+}
+
+async function callGetBookByTitle(title) {
+    try {
+        const response = await axios.get(`http://localhost:5000/title/${title}`); 
+        console.log(`\nAxios GET call to the get book by title endpoint for title ${title}.`);
+        console.log(response.data);
+    } catch (error) {
+        console.error(error);
+    } 
+}
+
 callGetBooks();
 callGetBookByISBN(2);
+callGetBookByAuthor("Unknown");
+callGetBookByTitle("Gilgamesh");
 
 
 module.exports.general = public_users;
