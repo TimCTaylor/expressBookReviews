@@ -3,6 +3,7 @@ let books = require("./booksdb.js");
 let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
+const axios = require('axios');
 
 
 // Check if a user with the given username already exists
@@ -38,7 +39,7 @@ public_users.post("/register", (req,res) => {
     return res.status(404).json({message: "Unable to register user."});
 });
 
-// Debugging function -- not for final code. Lists all users.
+// Debugging function -- you'd never release this for production code. Lists all users.
 public_users.get('/allusers',function (req, res) {
   return res.send(JSON.stringify(users,null,4));
 
@@ -120,4 +121,20 @@ public_users.get('/review/:isbn',function (req, res) {
   }
 });
 
+
+// The section below is for questions 10-13 for the final project assessment.
+// Here I show how to use axios to make HTTP requests to the existing server endpoints. 
+// It's a bit weird to have here in the server code, but essentially, I am simulating how I would make async REST calls from a client.
+
+async function callGetBooks() {
+    try {
+        const response = await axios.get('http://localhost:5000/');
+        console.log(response.data);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+console.log("About to make an axios GET call to the get all books endpoint.");
+callGetBooks();
 module.exports.general = public_users;
