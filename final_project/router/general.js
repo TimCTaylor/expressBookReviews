@@ -129,12 +129,25 @@ public_users.get('/review/:isbn',function (req, res) {
 async function callGetBooks() {
     try {
         const response = await axios.get('http://localhost:5000/');
+        console.log("\nAxios GET call to the get all books endpoint.");
         console.log(response.data);
     } catch (error) {
         console.error(error);
     }
 }
 
-console.log("About to make an axios GET call to the get all books endpoint.");
+async function callGetBookByISBN(isbn) {
+    try {
+        const response = await axios.get(`http://localhost:5000/isbn/${isbn}`);
+        console.log(`\nAxios GET call to the get book by ISBN endpoint for ISBN ${isbn}.`);
+        console.log(response.data);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 callGetBooks();
+callGetBookByISBN(2);
+
+
 module.exports.general = public_users;
